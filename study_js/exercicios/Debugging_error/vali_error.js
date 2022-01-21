@@ -14,10 +14,27 @@
 */
 
 function validErrors(arr, num) {
-  if (!arr && !num) return new ReferenceError('Invalid arguments')
-  if (typeof arr !== 'object') return TypeError('Tipo invalido')
-  if (typeof num !== 'number') return TypeError('Tipo invalido')
-  if (arr.length !== num) return new RangeError('Tamanho inválido')
+  try {
+    if (!arr && !num) throw new ReferenceError('Invalid arguments')
+    if (typeof arr !== 'object') throw new TypeError('Tipo invalido')
+    if (typeof num !== 'number') throw new TypeError('Tipo invalido')
+    if (arr.length !== num) throw new RangeError('Tamanho inválido')
+
+    return arr
+  } catch (error) {
+    if (error instanceof ReferenceError) {
+      console.log('Este erro é um ReferenceError!')
+      console.error(error.message)
+    } else if (error instanceof TypeError) {
+      console.log('Este erro é um TypeError!')
+      console.error(error.message)
+    } else if (error instanceof RangeError) {
+      console.log('Este erro é um RangeError!')
+      console.error(error.message)
+    } else {
+      console.error('Tipo de erro não esperado:' + error)
+    }
+  }
 }
 
 console.log(validErrors([5, 3, 5], 3))
